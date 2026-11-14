@@ -1,4 +1,4 @@
-<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Mini-jeux Cheetos Gang</title>
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body><title>Mini-jeux Cheetos Gang</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Inter:wght@400;500;600&display=swap">
 <style>
@@ -66,13 +66,28 @@ ul.xp{list-style:none;margin:0;padding:0}
 .race img{width:30px;height:30px;border-radius:50%;position:absolute}
 .soon{display:inline-block;font:800 10px var(--disp);letter-spacing:3px;color:#e0b43a;border:1px solid #e0b43a;padding:3px 9px;margin-bottom:12px}
 .note{color:var(--mute);font-size:14px;margin-top:18px}
+.sr{position:absolute;left:-9999px}
+.bar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+#q{flex:1;min-width:200px;background:#0b0b0f;color:var(--bone);border:1px solid var(--steel);padding:12px 14px;font:500 15px var(--body)}
+#q:focus{outline:2px solid var(--glow);outline-offset:1px}
+#st{font-size:12px;color:var(--mute);letter-spacing:1px}
+.lb{list-style:none;margin:0;padding:0}
+.lb li{display:flex;align-items:center;gap:14px;padding:11px 0;border-bottom:1px solid var(--line)}
+.lb .rk{flex:none;width:34px;height:34px;border-radius:50%;background:#2c2c34;border:2px solid var(--steel);font:900 14px/30px var(--disp);text-align:center}
+.lb .r1{border-color:#ffd24a;color:#ffd24a}.lb .r2{border-color:#c8ccd8}.lb .r3{border-color:#c07a45}
+.lb .nm{min-width:0;flex:1}.lb .nm b{display:block;font:800 15px var(--disp);letter-spacing:1px;overflow:hidden;text-overflow:ellipsis}
+.lb .nm small{color:var(--mute);font-size:12px}
+.lb .lv{text-align:right;font:900 26px/1 var(--disp);color:var(--glow)}.lb .lv small{display:block;font:600 9px var(--disp);letter-spacing:3px;color:var(--mute)}
+#me{margin-bottom:14px;padding:14px;border:1px dashed var(--glow);display:none}
+#me.on{display:block}#me .xb{height:8px;background:#0b0b0f;border:1px solid var(--line);margin-top:10px}#me .xb i{display:block;height:100%;background:linear-gradient(90deg,var(--blood),var(--glow))}
+.empty{color:var(--mute);padding:14px 0}
 footer{padding-block:34px;border-top:1px solid var(--line);color:var(--mute);font-size:13px;text-align:center}
 @media(max-width:480px){.frame{padding:18px}.wl{font-size:22px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 <div class="w">
 <header class="top"><div class="lg"><img src="data:image/webp;base64,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" alt="">CHEETOS GANG</div>
-<nav><a href="#boss">BOSS</a><a href="#course">COURSE</a><a href="#arene">ARÈNE</a><a href="#tresor">TRÉSOR</a><a href="#commandes">COMMANDES</a></nav></header>
+<nav><a href="#boss">BOSS</a><a href="#course">COURSE</a><a href="#arene">ARÈNE</a><a href="#classement">CLASSEMENT</a><a href="#tresor">TRÉSOR</a><a href="#commandes">COMMANDES</a></nav></header>
 <div class="hero"><small>LES MINI-JEUX DU STREAM</small><h1>Cheetos Gang</h1>
 <p>Frappe le boss, parie sur la course, entre dans l'arène. Plus tu es présent sur le stream, plus tu montes de niveau et plus tes armes sont fortes.</p>
 <div class="go"><a class="btn" href="#arene">ENTRER DANS L'ARÈNE</a><a class="btn g" href="#commandes">LES COMMANDES</a></div></div>
@@ -95,6 +110,11 @@ footer{padding-block:34px;border-top:1px solid var(--line);color:var(--mute);fon
 <div class="cols" style="margin-top:24px"><div class="frame"><h3>GAGNER DE L'XP</h3><ul class="xp"><li><span>Message dans le chat (1×/min)</span><b>+2 XP</b></li><li><span>Frapper le boss</span><b>+3 XP</b></li><li><span>Gagner un pari de course</span><b>+30 XP</b></li><li><span>Combattre</span><b>+15 XP</b></li><li><span>Gagner un combat</span><b>+40 XP</b></li><li><span>Un don (par €)</span><b>+10 XP</b></li><li><span>Bits (par 100 bits)</span><b>+5 XP</b></li><li><span>Follow</span><b>+50 XP</b></li><li><span>Sub</span><b>+150 XP</b></li></ul></div>
 <div><h3>LE NIVEAU</h3><p style="color:var(--mute);margin:0 0 14px">Ton niveau monte avec ton XP, de plus en plus lentement. Un niveau plus haut donne une arme plus forte et plus de points de vie. Tape <code>!niveau</code> pour voir où tu en es et <code>!classement</code> pour voir le top.</p><p style="color:var(--mute);margin:0">Pendant un combat, le classement reste affiché à l'écran.</p></div></div></section>
 
+<section id="classement"><div class="eb">EN DIRECT</div><h2>Le classement</h2>
+<p class="lead">Ton niveau et ton XP, mis à jour automatiquement pendant les lives. Cherche ton pseudo ou regarde le top.</p>
+<div class="frame"><div class="bar"><label for="q" class="sr">Chercher un pseudo</label><input id="q" type="search" placeholder="Chercher un pseudo" autocomplete="off"><span id="st"></span></div>
+<div id="me"></div><ol id="lb" class="lb"></ol></div></section>
+
 <section id="tresor"><div class="eb">MINI-JEU 4</div><h2>La chasse au trésor</h2>
 <span class="soon">BIENTÔT</span>
 <p class="lead">De temps en temps, un coffre apparaît à l'écran. Le premier qui l'ouvre gagne de l'XP ou une arme rare. Ce mini-jeu arrive dans une prochaine mise à jour.</p></section>
@@ -106,4 +126,33 @@ footer{padding-block:34px;border-top:1px solid var(--line);color:var(--mute);fon
 <footer>Cheetos Gang · Les mini-jeux du stream</footer></div>
 <script>
 document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',function(){var t=b.dataset.c,o=b.textContent;function ok(){b.classList.add('ok');b.textContent='copié';setTimeout(function(){b.classList.remove('ok');b.textContent=o},1200)}try{navigator.clipboard.writeText(t).then(ok,function(){})}catch(e){}})});
+
+/* Colle ici l'adresse de ta base Firebase (sans / à la fin), la même que dans le widget. */
+var FIREBASE_URL='https://cheetosgang-jeux-default-rtdb.europe-west1.firebasedatabase.app';
+var WN=[['Dague rouillée',1],['Épée des ténèbres',3],['Hache de guerre',6],['Marteau maudit',10],['Faux du faucheur',15]];
+function lvl(x){return 1+Math.floor(Math.sqrt(Math.max(0,x)/50))}
+function xpf(l){return 50*(l-1)*(l-1)}
+function wn(l){var r=WN[0][0];WN.forEach(function(w){if(l>=w[1])r=w[0]});return r}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+var DATA=[];
+function render(){
+  var q=document.getElementById('q').value.trim().toLowerCase(),lb=document.getElementById('lb'),me=document.getElementById('me');
+  var all=DATA.slice().sort(function(a,b){return b.xp-a.xp});
+  all.forEach(function(p,i){p.r=i+1});
+  var hit=q?all.filter(function(p){return String(p.n).toLowerCase().indexOf(q)>=0}):[];
+  if(q&&hit.length===1){var p=hit[0],l=lvl(p.xp),a=xpf(l),b=xpf(l+1),pc=Math.round((p.xp-a)/(b-a)*100);
+    me.className='on';me.innerHTML='<b style="font:800 18px var(--disp);letter-spacing:2px">'+esc(p.n)+'</b><div style="color:var(--mute);font-size:14px;margin-top:4px">Rang '+p.r+' · niveau '+l+' · '+p.xp+' XP · '+(p.w||0)+' victoires · '+(p.l||0)+' défaites · '+wn(l)+'</div><div class="xb"><i style="width:'+pc+'%"></i></div><div style="color:var(--mute);font-size:12px;margin-top:6px">'+(b-p.xp)+' XP avant le niveau '+(l+1)+'</div>'}
+  else{me.className='';me.innerHTML=''}
+  var list=q?hit:all.slice(0,20);
+  if(!list.length){lb.innerHTML='<li class="empty">'+(DATA.length?'Aucun joueur trouvé.':'Pas encore de joueurs. Reviens après un live avec l\'arène !')+'</li>';return}
+  lb.innerHTML=list.map(function(p){var l=lvl(p.xp);return '<li><span class="rk r'+p.r+'">'+p.r+'</span><div class="nm"><b>'+esc(p.n)+'</b><small>'+p.xp+' XP · '+(p.w||0)+' victoires · '+wn(l)+'</small></div><div class="lv"><small>NIV</small>'+l+'</div></li>'}).join('')}
+function load(){
+  var st=document.getElementById('st');
+  if(!FIREBASE_URL){st.textContent='Classement pas encore configuré';render();return}
+  fetch(FIREBASE_URL.replace(/\/+$/,'')+'/joueurs.json').then(function(r){return r.json()}).then(function(d){
+    DATA=d?Object.keys(d).map(function(k){return d[k]}):[];st.textContent='Mis à jour à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});render()
+  }).catch(function(){st.textContent='Classement indisponible pour le moment';render()})}
+document.getElementById('q').addEventListener('input',render);
+load();setInterval(load,60000);
 </script>
+</body></html>
