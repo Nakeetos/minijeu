@@ -78,8 +78,20 @@ ul.xp{list-style:none;margin:0;padding:0}
 .lb .nm{min-width:0;flex:1}.lb .nm b{display:block;font:800 15px var(--disp);letter-spacing:1px;overflow:hidden;text-overflow:ellipsis}
 .lb .nm small{color:var(--mute);font-size:12px}
 .lb .lv{text-align:right;font:900 26px/1 var(--disp);color:var(--glow)}.lb .lv small{display:block;font:600 9px var(--disp);letter-spacing:3px;color:var(--mute)}
-#me{margin-bottom:14px;padding:14px;border:1px dashed var(--glow);display:none}
-#me.on{display:block}#me .xb{height:8px;background:#0b0b0f;border:1px solid var(--line);margin-top:10px}#me .xb i{display:block;height:100%;background:linear-gradient(90deg,var(--blood),var(--glow))}
+#prof{margin-bottom:16px}#prof:empty{display:none}
+.pf{border:1px solid var(--glow);background:#101016;padding:20px;display:grid;gap:18px}
+.pf-h{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.pf-av{flex:none;width:84px;height:84px;border-radius:50%;border:3px solid var(--bone);display:grid;place-items:center;font:900 38px var(--disp);color:#fff;text-shadow:0 2px 3px #000;background-size:cover;background-position:center;box-shadow:0 0 18px #c4121c66}
+.pf-n{flex:1;min-width:160px}.pf-n h3{margin:0;font:900 26px/1.1 var(--disp);letter-spacing:2px;overflow-wrap:anywhere}.pf-n small{display:block;margin-top:6px;color:var(--mute);font-size:13px;letter-spacing:1px}
+.pf-lv{text-align:right;font:900 54px/1 var(--disp);color:var(--glow);text-shadow:0 0 18px #ff2a1f88}.pf-lv small{display:block;font:600 10px var(--disp);letter-spacing:4px;color:var(--mute);text-shadow:none}
+.pf-xp .xb{height:12px;background:#0b0b0f;border:1px solid var(--steel)}.pf-xp .xb i{display:block;height:100%;background:linear-gradient(90deg,var(--blood),var(--glow))}.pf-xp small{display:block;margin-top:6px;color:var(--mute);font-size:13px}
+.pf-st{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.pf-st div{background:#0b0b0f;border:1px solid var(--line);padding:12px;text-align:center}.pf-st b{display:block;font:900 24px var(--disp);color:var(--bone)}.pf-st span{font:600 10px var(--disp);letter-spacing:3px;color:var(--mute)}
+.pf-w{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:10px}
+.pw{background:#0b0b0f;border:1px solid var(--line);padding:10px 6px;text-align:center}.pw svg{width:42px;height:42px}.pw b{display:block;font:800 11px/1.3 var(--disp);letter-spacing:1px;margin-top:4px}.pw small{color:var(--mute);font-size:11px}
+.pw.lock{opacity:.4;filter:grayscale(1)}.pw.cur{border-color:#ffd24a;box-shadow:0 0 14px #ffd24a55}.pw.cur b{color:#ffd24a}
+.pf-f{display:flex;gap:10px;flex-wrap:wrap}.pbtn{font:700 12px var(--disp);letter-spacing:2px;color:var(--bone);background:transparent;border:1px solid var(--steel);padding:9px 14px;cursor:pointer}.pbtn:hover{border-color:var(--glow)}.pbtn:focus-visible{outline:2px solid var(--bone);outline-offset:2px}
+.lb li[data-n]{cursor:pointer}.lb li[data-n]:hover{background:#ffffff08}.lb li[data-n]:focus-visible{outline:2px solid var(--bone);outline-offset:-2px}
 .empty{color:var(--mute);padding:14px 0}
 .split{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:start}
 .live{position:sticky;top:12px;display:flex;flex-direction:column;gap:12px;height:calc(100vh - 24px);min-height:520px;padding-top:8px}
@@ -122,9 +134,9 @@ footer{padding-block:34px;border-top:1px solid var(--line);color:var(--mute);fon
 <div><h3>LE NIVEAU</h3><p style="color:var(--mute);margin:0 0 14px">Ton niveau monte avec ton XP, de plus en plus lentement. Un niveau plus haut donne une arme plus forte et plus de points de vie. Tape <code>!niveau</code> pour voir où tu en es et <code>!classement</code> pour voir le top.</p><p style="color:var(--mute);margin:0">Pendant un combat, le classement reste affiché à l'écran.</p></div></div></section>
 
 <section id="classement"><div class="eb">EN DIRECT</div><h2>Le classement</h2>
-<p class="lead">Ton niveau et ton XP, mis à jour automatiquement pendant les lives. Cherche ton pseudo ou regarde le top.</p>
+<p class="lead">Ton niveau et ton XP, mis à jour automatiquement pendant les lives. Cherche ton pseudo ou clique sur un joueur pour voir son profil.</p>
 <div class="frame"><div class="bar"><label for="q" class="sr">Chercher un pseudo</label><input id="q" type="search" placeholder="Chercher un pseudo" autocomplete="off"><span id="st"></span></div>
-<div id="me"></div><ol id="lb" class="lb"></ol></div></section>
+<div id="prof"></div><ol id="lb" class="lb"></ol></div></section>
 
 <section id="tresor"><div class="eb">MINI-JEU 4</div><h2>La mallette</h2>
 <p class="lead">De temps en temps, une mallette tombe à l'écran. Le premier qui l'ouvre gagne de l'XP pour l'arène. Les mallettes rares donnent le triple.</p>
@@ -142,30 +154,59 @@ document.querySelectorAll('.cp').forEach(function(b){b.addEventListener('click',
 
 /* Colle ici l'adresse de ta base Firebase (sans / à la fin), la même que dans le widget. */
 var FIREBASE_URL='https://cheetosgang-jeux-default-rtdb.europe-west1.firebasedatabase.app';
-var WN=[['Dague rouillée',1],['Épée des ténèbres',3],['Hache de guerre',6],['Marteau maudit',10],['Faux du faucheur',15]];
+var WP=[['Dague rouillée',1,4,7,'dagger'],['Épée des ténèbres',3,8,13,'sword'],['Hache de guerre',6,12,19,'axe'],['Marteau maudit',10,17,26,'hammer'],['Faux du faucheur',15,24,36,'scythe']];
+var WSV={"dagger": "<svg viewBox=\"0 0 64 64\"><g transform=\"rotate(45 32 32)\"><path d=\"M32 8 L37 36 L27 36Z\" fill=\"#dfe3ee\" stroke=\"#2a2a33\" stroke-width=\"1.2\"/><rect x=\"21\" y=\"36\" width=\"22\" height=\"4\" rx=\"2\" fill=\"#c4121c\" stroke=\"#3a0508\"/><rect x=\"29\" y=\"40\" width=\"6\" height=\"13\" fill=\"#5b3a1e\" stroke=\"#2a1a0a\"/></g></svg>", "sword": "<svg viewBox=\"0 0 64 64\"><g transform=\"rotate(45 32 32)\"><path d=\"M32 1 L38 38 L26 38Z\" fill=\"#f4f6fb\" stroke=\"#2a2a33\" stroke-width=\"1.2\"/><path d=\"M32 5 L32 36\" stroke=\"#9aa0b4\"/><rect x=\"17\" y=\"38\" width=\"30\" height=\"5\" rx=\"2\" fill=\"#c4121c\" stroke=\"#3a0508\"/><rect x=\"29\" y=\"43\" width=\"6\" height=\"12\" fill=\"#5b3a1e\" stroke=\"#2a1a0a\"/><circle cx=\"32\" cy=\"58\" r=\"4\" fill=\"#c4121c\" stroke=\"#3a0508\"/></g></svg>", "axe": "<svg viewBox=\"0 0 64 64\"><g transform=\"rotate(20 32 32)\"><rect x=\"29\" y=\"6\" width=\"6\" height=\"54\" rx=\"2\" fill=\"#5b3a1e\" stroke=\"#2a1a0a\"/><path d=\"M35 8 C58 8 62 30 35 36 Z\" fill=\"#cfd3de\" stroke=\"#2a2a33\" stroke-width=\"1.2\"/><path d=\"M35 14 C50 16 52 26 35 30\" fill=\"none\" stroke=\"#9aa0b4\"/></g></svg>", "hammer": "<svg viewBox=\"0 0 64 64\"><g transform=\"rotate(35 32 32)\"><rect x=\"29\" y=\"14\" width=\"6\" height=\"48\" rx=\"2\" fill=\"#5b3a1e\" stroke=\"#2a1a0a\"/><rect x=\"12\" y=\"4\" width=\"40\" height=\"18\" rx=\"3\" fill=\"#8b8d9c\" stroke=\"#2a2a33\" stroke-width=\"1.5\"/><rect x=\"12\" y=\"4\" width=\"8\" height=\"18\" fill=\"#c4121c\" opacity=\".8\"/><rect x=\"44\" y=\"4\" width=\"8\" height=\"18\" fill=\"#c4121c\" opacity=\".8\"/></g></svg>", "scythe": "<svg viewBox=\"0 0 64 64\"><g transform=\"rotate(-15 32 32)\"><rect x=\"30\" y=\"4\" width=\"5\" height=\"58\" rx=\"2\" fill=\"#4a2f18\" stroke=\"#1a1008\"/><path d=\"M33 8 C10 2 4 26 12 36 C10 22 20 12 33 14Z\" fill=\"#dfe3ee\" stroke=\"#2a2a33\" stroke-width=\"1.2\"/><path d=\"M33 8 C44 8 56 14 58 26 C50 16 42 14 33 14Z\" fill=\"#c4121c\" opacity=\".0\"/></g></svg>"};
 function lvl(x){return 1+Math.floor(Math.sqrt(Math.max(0,x)/50))}
 function xpf(l){return 50*(l-1)*(l-1)}
-function wn(l){var r=WN[0][0];WN.forEach(function(w){if(l>=w[1])r=w[0]});return r}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
-var DATA=[];
+function best(l){var b=0;WP.forEach(function(w,i){if(l>=w[1])b=i});return b}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+function hue(n){var h=0;for(var i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))%360;return h}
+var DATA=[],SEL='',AVC={};
+function profileHtml(p,total){
+  var l=lvl(p.xp),a=xpf(l),b=xpf(l+1),pc=Math.round((p.xp-a)/(b-a)*100),cur=Math.min(p.wp||0,best(l)),w=p.w||0,lo=p.l||0,tot=w+lo,wr=tot?Math.round(w/tot*100):0,hp=45+4*(l-1);
+  var nx=null;WP.forEach(function(x){if(!nx&&x[1]>l)nx=x});
+  var h=hue(String(p.n));
+  var html='<div class="pf"><div class="pf-h"><div class="pf-av" data-u="'+esc(p.n)+'" style="background-image:linear-gradient(135deg,hsl('+h+',70%,45%),hsl('+((h+40)%360)+',70%,28%))">'+esc(String(p.n).charAt(0).toUpperCase())+'</div>'
+   +'<div class="pf-n"><h3>'+esc(p.n)+'</h3><small>Rang '+p.r+' sur '+total+' joueurs · '+WP[cur][0]+'</small></div><div class="pf-lv"><small>NIVEAU</small>'+l+'</div></div>'
+   +'<div class="pf-xp"><div class="xb"><i style="width:'+pc+'%"></i></div><small>'+p.xp+' XP · encore '+(b-p.xp)+' XP pour le niveau '+(l+1)+'</small></div>'
+   +'<div class="pf-st"><div><b>'+w+'</b><span>VICTOIRES</span></div><div><b>'+lo+'</b><span>DÉFAITES</span></div><div><b>'+wr+'%</b><span>RATIO</span></div><div><b>'+hp+'</b><span>PV</span></div></div>'
+   +'<div class="pf-w">'+WP.map(function(x,i){return '<div class="pw'+(l>=x[1]?'':' lock')+(i===cur?' cur':'')+'">'+WSV[x[4]]+'<b>'+x[0]+'</b><small>'+x[2]+'–'+x[3]+' · NIV '+x[1]+'</small></div>'}).join('')+'</div>'
+   +(nx?'<small style="color:var(--mute)">Prochaine arme : <b style="color:var(--bone)">'+nx[0]+'</b> au niveau '+nx[1]+' (encore '+(xpf(nx[1])-p.xp)+' XP).</small>':'<small style="color:#ffd24a">Toutes les armes sont débloquées.</small>')
+   +'<div class="pf-f"><button class="pbtn" id="pcp" type="button">COPIER LE LIEN</button><button class="pbtn" id="pcl" type="button">FERMER</button></div></div>';
+  return html}
+function avatars(){document.querySelectorAll('#prof [data-u]').forEach(function(el){var u=String(el.dataset.u).toLowerCase();
+  function ap(x){if(x){el.style.backgroundImage='url("'+x+'")';el.style.color='transparent';el.style.textShadow='none'}}
+  if(u in AVC){ap(AVC[u]);return}AVC[u]='';
+  try{fetch('https://decapi.me/twitch/avatar/'+encodeURIComponent(u)).then(function(r){return r.text()}).then(function(x){x=String(x).trim();if(/^https:\/\//.test(x)){AVC[u]=x;ap(x)}}).catch(function(){})}catch(e){}})}
 function render(){
-  var q=document.getElementById('q').value.trim().toLowerCase(),lb=document.getElementById('lb'),me=document.getElementById('me');
-  var all=DATA.slice().sort(function(a,b){return b.xp-a.xp});
-  all.forEach(function(p,i){p.r=i+1});
+  var q=document.getElementById('q').value.trim().toLowerCase(),lb=document.getElementById('lb'),pr=document.getElementById('prof');
+  var all=DATA.slice().sort(function(a,b){return b.xp-a.xp});all.forEach(function(p,i){p.r=i+1});
   var hit=q?all.filter(function(p){return String(p.n).toLowerCase().indexOf(q)>=0}):[];
-  if(q&&hit.length===1){var p=hit[0],l=lvl(p.xp),a=xpf(l),b=xpf(l+1),pc=Math.round((p.xp-a)/(b-a)*100);
-    me.className='on';me.innerHTML='<b style="font:800 18px var(--disp);letter-spacing:2px">'+esc(p.n)+'</b><div style="color:var(--mute);font-size:14px;margin-top:4px">Rang '+p.r+' · niveau '+l+' · '+p.xp+' XP · '+(p.w||0)+' victoires · '+(p.l||0)+' défaites · '+wn(l)+'</div><div class="xb"><i style="width:'+pc+'%"></i></div><div style="color:var(--mute);font-size:12px;margin-top:6px">'+(b-p.xp)+' XP avant le niveau '+(l+1)+'</div>'}
-  else{me.className='';me.innerHTML=''}
+  var sel=null;
+  if(SEL){all.forEach(function(p){if(String(p.n).toLowerCase()===SEL)sel=p})}
+  else if(q&&hit.length===1)sel=hit[0];
+  if(sel){pr.innerHTML=profileHtml(sel,all.length);avatars()}
+  else if(SEL&&DATA.length){pr.innerHTML='<div class="pf"><div class="empty">Aucun profil pour « '+esc(SEL)+' ». Tape !rejoindre dans le chat quand l\'arène est ouverte pour créer le tien.</div><div class="pf-f"><button class="pbtn" id="pcl" type="button">FERMER</button></div></div>'}
+  else pr.innerHTML='';
   var list=q?hit:all.slice(0,20);
   if(!list.length){lb.innerHTML='<li class="empty">'+(DATA.length?'Aucun joueur trouvé.':'Pas encore de joueurs. Reviens après un live avec l\'arène !')+'</li>';return}
-  lb.innerHTML=list.map(function(p){var l=lvl(p.xp);return '<li><span class="rk r'+p.r+'">'+p.r+'</span><div class="nm"><b>'+esc(p.n)+'</b><small>'+p.xp+' XP · '+(p.w||0)+' victoires · '+wn(l)+'</small></div><div class="lv"><small>NIV</small>'+l+'</div></li>'}).join('')}
+  lb.innerHTML=list.map(function(p){var l=lvl(p.xp);return '<li data-n="'+esc(p.n)+'" tabindex="0" role="button" aria-label="Voir le profil de '+esc(p.n)+'"><span class="rk r'+p.r+'">'+p.r+'</span><div class="nm"><b>'+esc(p.n)+'</b><small>'+p.xp+' XP · '+(p.w||0)+((p.w||0)===1?' victoire · ':' victoires · ')+WP[Math.min(p.wp||0,best(l))][0]+'</small></div><div class="lv"><small>NIV</small>'+l+'</div></li>'}).join('')}
+function openP(n,scroll){SEL=String(n).toLowerCase();try{history.replaceState(null,'','#profil='+encodeURIComponent(n))}catch(e){}render();if(scroll){var e=document.getElementById('prof');if(e&&e.scrollIntoView)e.scrollIntoView({behavior:'smooth',block:'center'})}}
+function closeP(){SEL='';document.getElementById('q').value='';try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}render()}
+document.getElementById('lb').addEventListener('click',function(e){var li=e.target.closest('li[data-n]');if(li)openP(li.dataset.n,true)});
+document.getElementById('lb').addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){var li=e.target.closest('li[data-n]');if(li){e.preventDefault();openP(li.dataset.n,true)}}});
+document.getElementById('prof').addEventListener('click',function(e){
+  if(e.target.id==='pcl')closeP();
+  if(e.target.id==='pcp'){var b=e.target,o=b.textContent,u=location.href.split('#')[0]+(SEL?'#profil='+encodeURIComponent(SEL):'');try{navigator.clipboard.writeText(u).then(function(){b.textContent='COPIÉ';setTimeout(function(){b.textContent=o},1200)},function(){})}catch(x){}}});
+function fromHash(){var m=/^#profil=(.+)$/.exec(location.hash);if(m){try{SEL=decodeURIComponent(m[1]).toLowerCase()}catch(e){}}}
 function load(){
   var st=document.getElementById('st');
   if(!FIREBASE_URL){st.textContent='Classement pas encore configuré';render();return}
   fetch(FIREBASE_URL.replace(/\/+$/,'')+'/joueurs.json').then(function(r){return r.json()}).then(function(d){
     DATA=d?Object.keys(d).map(function(k){return d[k]}):[];st.textContent='Mis à jour à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});render()
   }).catch(function(){st.textContent='Classement indisponible pour le moment';render()})}
-document.getElementById('q').addEventListener('input',render);
+document.getElementById('q').addEventListener('input',function(){if(SEL){SEL=''}render()});
+fromHash();window.addEventListener('hashchange',function(){fromHash();render()});
 load();setInterval(load,60000);
 
 /* Nom de ta chaîne Twitch (en minuscules). */
